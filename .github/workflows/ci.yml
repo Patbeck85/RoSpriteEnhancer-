@@ -26,14 +26,14 @@ jobs:
       run: dotnet build RoSpriteEnhancer.sln --configuration Release --no-restore
 
     - name: Run tests with coverage
-      run: dotnet test RoSpriteEnhancer.Tests/RoSpriteEnhancer.Tests.csproj --configuration Release --collect:"XPlat Code Coverage" --results-directory:./coverage --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test src/RoSpriteEnhancer.Tests/RoSpriteEnhancer.Tests.csproj --configuration Release --collect:"XPlat Code Coverage" --results-directory:./coverage --logger "trx;LogFileName=test-results.trx"
 
     - name: Upload test results
       uses: actions/upload-artifact@v4
       if: always()
       with:
         name: test-results
-        path: RoSpriteEnhancer.Tests/coverage/
+        path: src/RoSpriteEnhancer.Tests/coverage/
         retention-days: 7
 
     - name: Upload coverage report
@@ -41,13 +41,13 @@ jobs:
       if: always()
       with:
         name: coverage-report
-        path: RoSpriteEnhancer.Tests/coverage/
+        path: src/RoSpriteEnhancer.Tests/coverage/
         retention-days: 7
 
     - name: Check code coverage gate (80% minimum)
       shell: pwsh
       run: |
-        $coverageFile = Get-ChildItem -Path "RoSpriteEnhancer.Tests/coverage/" -Filter "coverage.cobertura.xml" -Recurse | Select-Object -First 1
+        $coverageFile = Get-ChildItem -Path "src/RoSpriteEnhancer.Tests/coverage/" -Filter "coverage.cobertura.xml" -Recurse | Select-Object -First 1
         if (-not $coverageFile) {
           Write-Host "WARNING: No coverage file found, skipping gate check."
           exit 0
