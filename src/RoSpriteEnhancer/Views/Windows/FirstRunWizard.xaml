@@ -1,0 +1,96 @@
+<Window x:Class="RoSpriteEnhancer.Views.Windows.FirstRunWizard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RoSprite Enhancer — Erster Start"
+        Height="600" Width="700"
+        MinHeight="550" MinWidth="650"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BrushGlassBackground}"
+        FontFamily="Segoe UI Variable"
+        ResizeMode="NoResize"
+        Style="{StaticResource GlassWindow}">
+
+    <Grid Margin="30,20,30,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <Border Grid.Row="0" Background="{StaticResource BrushGlassSurfaceLight}" BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="1" CornerRadius="12" Padding="20,16">
+            <StackPanel>
+                <TextBlock Text="🧊" FontSize="32" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                <TextBlock Text="RoSprite Enhancer" FontSize="24" FontWeight="SemiBold" Foreground="{StaticResource BrushGlassPrimary}" HorizontalAlignment="Center"/>
+                <TextBlock Text="v1.21.0 — Liquid Glass 2026" FontSize="12" Foreground="{StaticResource BrushGlassPrimaryLight}" HorizontalAlignment="Center"/>
+                <TextBlock Text="Willkommen! Richten Sie die Anwendung für den ersten Start ein." FontSize="11" Foreground="{StaticResource BrushGlassTextLight}" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- CONTENT -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,16,0,0">
+            <StackPanel>
+
+                <!-- SCHRITT 1: SPRACHE -->
+                <Border Background="{StaticResource BrushGlassSurfaceLight}" BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="1" CornerRadius="8" Padding="16,14">
+                    <StackPanel>
+                        <TextBlock Text="1. Sprache / Language" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushGlassPrimary}" Margin="0,0,0,8"/>
+                        <ComboBox x:Name="CmbLanguage" Style="{StaticResource GlassComboBox}" Width="200" HorizontalAlignment="Left" Margin="0,0,0,8"/>
+                        <TextBlock Text="Wählen Sie die Anzeigesprache für die Benutzeroberfläche." FontSize="9" Foreground="{StaticResource BrushGlassTextLight}" FontStyle="Italic"/>
+                    </StackPanel>
+                </Border>
+
+                <Separator Margin="0,12"/>
+
+                <!-- SCHRITT 2: ORDNER -->
+                <Border Background="{StaticResource BrushGlassSurfaceLight}" BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="1" CornerRadius="8" Padding="16,14">
+                    <StackPanel>
+                        <TextBlock Text="2. Standard-Ordner" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushGlassPrimary}" Margin="0,0,0,8"/>
+
+                        <TextBlock Text="Eingabe-Ordner (extrahierte Sprites):" FontSize="10" Foreground="{StaticResource BrushGlassTextDark}" Margin="0,0,0,4"/>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <TextBox x:Name="TxtInputPath" Background="{StaticResource BrushGlassSurfaceLight}" Foreground="{StaticResource BrushGlassTextDark}" BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="1" Padding="5,6" FontSize="10" FontFamily="Consolas" IsReadOnly="True"/>
+                            <Button Grid.Column="1" Content="📂" Style="{StaticResource GlassButtonSecondary}" Width="40" Click="BtnBrowseInput_Click" FontSize="14" Padding="0"/>
+                        </Grid>
+
+                        <TextBlock Text="Ausgabe-Ordner (verbesserte Sprites):" FontSize="10" Foreground="{StaticResource BrushGlassTextDark}" Margin="0,12,0,4"/>
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <TextBox x:Name="TxtOutputPath" Background="{StaticResource BrushGlassSurfaceLight}" Foreground="{StaticResource BrushGlassTextDark}" BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="1" Padding="5,6" FontSize="10" FontFamily="Consolas" IsReadOnly="True"/>
+                            <Button Grid.Column="1" Content="📂" Style="{StaticResource GlassButtonSecondary}" Width="40" Click="BtnBrowseOutput_Click" FontSize="14" Padding="0"/>
+                        </Grid>
+
+                        <TextBlock Text="Diese Ordner werden standardmäßig für die Batch-Verarbeitung verwendet." FontSize="9" Foreground="{StaticResource BrushGlassTextLight}" FontStyle="Italic"/>
+                    </StackPanel>
+                </Border>
+
+                <Separator Margin="0,12"/>
+
+                <!-- SCHRITT 3: KI-TOOLS -->
+                <Border Background="{StaticResource BrushGlassSurfaceLight}" BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="1" CornerRadius="8" Padding="16,14">
+                    <StackPanel>
+                        <TextBlock Text="3. KI-Upscaling-Tools (optional)" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushGlassPrimary}" Margin="0,0,0,8"/>
+                        <TextBlock Text="KI-Tools können später jederzeit in den Einstellungen heruntergeladen werden." FontSize="9" Foreground="{StaticResource BrushGlassTextLight}" FontStyle="Italic" Margin="0,0,0,8"/>
+
+                        <CheckBox x:Name="ChkDownloadWaifu2x" Content="Waifu2x (Anime Upscaling) automatisch herunterladen" Style="{StaticResource GlassCheckBox}" Margin="0,0,0,4"/>
+                        <CheckBox x:Name="ChkDownloadRealCugan" Content="RealCUGAN (Anime Upscaling) automatisch herunterladen" Style="{StaticResource GlassCheckBox}" Margin="0,0,0,4"/>
+                        <CheckBox x:Name="ChkDownloadRealESRGAN" Content="RealESRGAN (Allgemein Upscaling) automatisch herunterladen" Style="{StaticResource GlassCheckBox}" Margin="0,0,0,4"/>
+                        <CheckBox x:Name="ChkDownloadGFPGAN" Content="GFPGAN (Gesichter-Restaurierung) automatisch herunterladen" Style="{StaticResource GlassCheckBox}" Margin="0,0,0,8"/>
+
+                        <TextBlock Text="Die Tools werden im Ordner 'tools/' innerhalb des Anwendungsverzeichnisses gespeichert." FontSize="9" Foreground="{StaticResource BrushGlassTextLight}" FontStyle="Italic"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- FOOTER -->
+        <Border Grid.Row="2" Margin="0,16,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Abbrechen" Style="{StaticResource GlassButtonSecondary}" Width="90" Height="36" Margin="0,0,12,0" Click="BtnCancel_Click"/>
+                <Button Content="Fertigstellen" Style="{StaticResource GlassButtonPrimary}" Width="120" Height="36" Click="BtnFinish_Click"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,115 @@
+<Window x:Class="RoSpriteEnhancer.Views.Windows.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/2008/compatibility"
+        xmlns:local="clr-namespace:RoSpriteEnhancer.Views.Windows"
+        Title="Hilfe &amp; Tutorials" Height="700" Width="900"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BrushGlassSurfaceLight}">
+    <Window.Resources>
+        <Style x:Key="TutorialCard" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource BrushGlassSurfaceMedium}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BrushGlassBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
+        <Style x:Key="StepButton" TargetType="Button">
+            <Setter Property="Style" Value="{StaticResource GlassButtonGhost}"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="❓ Hilfe &amp; Tutorials" FontSize="24" FontWeight="Bold" 
+                       Foreground="{StaticResource BrushGlassTextDark}"/>
+            <TextBlock Text="Schritt-für-Schritt-Anleitungen für neue Benutzer" 
+                       FontSize="12" Foreground="{StaticResource BrushGlassTextLight}" Margin="0,4,0,0"/>
+            <Border Height="1" Background="{StaticResource BrushGlassBorder}" Margin="0,12,0,0"/>
+        </StackPanel>
+
+        <!-- Inhalt -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Tutorial-Liste (links) -->
+            <Border Grid.Column="0" Background="{StaticResource BrushGlassSurfaceLight}" 
+                    BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="0,0,1,0"
+                    CornerRadius="8,0,0,8" Padding="12">
+                <StackPanel>
+                    <TextBlock Text="Verfügbare Anleitungen" FontSize="14" FontWeight="Bold" 
+                               Foreground="{StaticResource BrushGlassTextDark}" Margin="0,0,0,12"/>
+                    <ListBox x:Name="TutorialList" BorderThickness="0" 
+                             Background="Transparent" SelectionChanged="TutorialList_SelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="8,6" CornerRadius="6" Margin="0,2">
+                                    <TextBlock Text="{Binding Title}" FontSize="12" 
+                                               Foreground="{StaticResource BrushGlassTextDark}" 
+                                               TextWrapping="Wrap"/>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Border>
+
+            <!-- Tutorial-Inhalt (rechts) -->
+            <ScrollViewer Grid.Column="1" Margin="16,0,0,0" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="TutorialContent" Margin="0,0,0,20">
+                    <TextBlock x:Name="TutorialTitle" FontSize="20" FontWeight="Bold" 
+                               Foreground="{StaticResource BrushGlassTextDark}" Margin="0,0,0,16"/>
+                    <TextBlock x:Name="TutorialDescription" FontSize="13" 
+                               Foreground="{StaticResource BrushGlassTextLight}" 
+                               TextWrapping="Wrap" Margin="0,0,0,20"/>
+                    
+                    <ItemsControl x:Name="StepsList" Margin="0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource TutorialCard}">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="Bold"
+                                                   Foreground="{StaticResource BrushGlassPrimary}" Margin="0,0,0,8"/>
+                                        <TextBlock Text="{Binding Description}" FontSize="13"
+                                                   Foreground="{StaticResource BrushGlassTextDark}" 
+                                                   TextWrapping="Wrap" Margin="0,0,0,12"/>
+                                        <Image x:Name="StepImage" Source="{Binding ImagePath}" 
+                                               MaxHeight="200" MaxWidth="400" 
+                                               HorizontalAlignment="Center" Margin="0,0,0,12"
+                                               Visibility="{Binding ImagePath, Converter={StaticResource InverseBoolToVisibilityConverter}, ConverterParameter='empty'}" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <!-- Statusleiste -->
+        <Border Grid.Row="2" Background="{StaticResource BrushGlassSurfaceMedium}" 
+                BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="0,1,0,0"
+                Padding="12,8">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="TxtStatus" FontSize="11" Foreground="{StaticResource BrushGlassTextLight}"/>
+                <TextBlock Text="  |  " FontSize="11" Foreground="{StaticResource BrushGlassTextLight}"/>
+                <TextBlock Text="Tipp: Tooltips zeigen weitere Informationen bei Mauszeiger-Überfahrt." 
+                           FontSize="11" Foreground="{StaticResource BrushGlassTextLight}" FontStyle="Italic"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

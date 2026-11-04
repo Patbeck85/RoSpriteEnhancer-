@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>RoSpriteEnhancer.Core</AssemblyName>
+    <RootNamespace>RoSpriteEnhancer.Core</RootNamespace>
+    <Version>1.20.0</Version>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Utils/KeyboardShortcutManager.cs" />
+    <Compile Include="Utils/Logger.cs" />
+    <Compile Include="Utils/ServiceContainer.cs" />
+    <Compile Include="Utils/ThemeDetector.cs" />
+    <Compile Include="Utils/UndoRedoManager.cs" />
+    <Compile Include="Utils/PathHelper.cs" />
+    <Compile Include="Utils/PaletteManager.cs" />
+    <Compile Include="Processing/QualityChecker.cs" />
+    <Compile Include="Processing/SpriteAtlasGenerator.cs" />
+    <Compile Include="Processing/SpriteContentClassifier.cs" />
+    <Compile Include="Services/PresetSharingService.cs" />
+    <Compile Include="Services/AutoUpdateService.cs" />
+    <Compile Include="Processing/UpscalerPluginManager.cs" />
+  </ItemGroup>
+</Project>

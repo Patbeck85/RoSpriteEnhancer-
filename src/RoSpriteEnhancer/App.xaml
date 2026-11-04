@@ -1,0 +1,328 @@
+<Application x:Class="RoSpriteEnhancer.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:RoSpriteEnhancer"
+             StartupUri="Views/Windows/MainWindow.xaml">
+    <Application.Resources>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             LIQUID GLASS 2026 DESIGN SYSTEM — Weiss-Bläulich
+             ═════════════════════════════════════════════════════════════ -->
+
+        <!-- Farbpalette: Ice-Blue / Weiß / Transparent -->
+        <Color x:Key="GlassBackground">#F5FBFF</Color>
+        <Color x:Key="GlassSurface">#FFFFFF</Color>
+        <Color x:Key="GlassSurfaceLight">#FFFFFF80</Color>
+        <Color x:Key="GlassSurfaceMedium">#FFFFFF40</Color>
+        <Color x:Key="GlassPrimary">#3A86FF</Color>
+        <Color x:Key="GlassPrimaryLight">#6CB4EE</Color>
+        <Color x:Key="GlassPrimaryDark">#2563EB</Color>
+        <Color x:Key="GlassAccent">#00D4FF</Color>
+        <Color x:Key="GlassAccentLight">#4FE1FF</Color>
+        <Color x:Key="GlassTextDark">#1A2E4C</Color>
+        <Color x:Key="GlassTextMedium">#2C3E50</Color>
+        <Color x:Key="GlassTextLight">#64748B</Color>
+        <Color x:Key="GlassBorder">#B8D4F0</Color>
+        <Color x:Key="GlassBorderLight">#E8F1FF</Color>
+        <Color x:Key="GlassShadow">#0000001A</Color>
+        <Color x:Key="GlassSuccess">#10B981</Color>
+        <Color x:Key="GlassWarning">#F59E0B</Color>
+        <Color x:Key="GlassError">#EF4444</Color>
+
+        <!-- Ressourcen -->
+        <SolidColorBrush x:Key="BrushGlassBackground" Color="{StaticResource GlassBackground}"/>
+        <SolidColorBrush x:Key="BrushGlassSurface" Color="{StaticResource GlassSurface}"/>
+        <SolidColorBrush x:Key="BrushGlassSurfaceLight" Color="{StaticResource GlassSurfaceLight}"/>
+        <SolidColorBrush x:Key="BrushGlassSurfaceMedium" Color="{StaticResource GlassSurfaceMedium}"/>
+        <SolidColorBrush x:Key="BrushGlassPrimary" Color="{StaticResource GlassPrimary}"/>
+        <SolidColorBrush x:Key="BrushGlassPrimaryLight" Color="{StaticResource GlassPrimaryLight}"/>
+        <SolidColorBrush x:Key="BrushGlassPrimaryDark" Color="{StaticResource GlassPrimaryDark}"/>
+        <SolidColorBrush x:Key="BrushGlassAccent" Color="{StaticResource GlassAccent}"/>
+        <SolidColorBrush x:Key="BrushGlassAccentLight" Color="{StaticResource GlassAccentLight}"/>
+        <SolidColorBrush x:Key="BrushGlassTextDark" Color="{StaticResource GlassTextDark}"/>
+        <SolidColorBrush x:Key="BrushGlassTextMedium" Color="{StaticResource GlassTextMedium}"/>
+        <SolidColorBrush x:Key="BrushGlassTextLight" Color="{StaticResource GlassTextLight}"/>
+        <SolidColorBrush x:Key="BrushGlassBorder" Color="{StaticResource GlassBorder}"/>
+        <SolidColorBrush x:Key="BrushGlassBorderLight" Color="{StaticResource GlassBorderLight}"/>
+        <SolidColorBrush x:Key="BrushGlassShadow" Color="{StaticResource GlassShadow}"/>
+        <SolidColorBrush x:Key="BrushGlassSuccess" Color="{StaticResource GlassSuccess}"/>
+        <SolidColorBrush x:Key="BrushGlassWarning" Color="{StaticResource GlassWarning}"/>
+        <SolidColorBrush x:Key="BrushGlassError" Color="{StaticResource GlassError}"/>
+
+        <!-- Gradients -->
+        <LinearGradientBrush x:Key="GradientGlassPrimary" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="{StaticResource GlassPrimaryLight}" Offset="0"/>
+            <GradientStop Color="{StaticResource GlassPrimaryDark}" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="GradientGlassAccent" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="{StaticResource GlassAccentLight}" Offset="0"/>
+            <GradientStop Color="{StaticResource GlassAccent}" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="GradientGlassSurface" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFFFFF" Offset="0"/>
+            <GradientStop Color="#F0F7FF" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- Glass Card Border (für alle Panels/Karten) -->
+        <Style x:Key="GlassCard" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource BrushGlassSurfaceLight}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BrushGlassBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="24" ShadowDepth="0" Color="{StaticResource GlassShadow}" Opacity="0.4"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Glass Card ohne Schatten (für innere Elemente) -->
+        <Style x:Key="GlassCardFlat" TargetType="Border" BasedOn="{StaticResource GlassCard}">
+            <Setter Property="Effect" Value="{x:Null}"/>
+        </Style>
+
+        <!-- Primary Button: Liquid Glass -->
+        <Style x:Key="GlassButtonPrimary" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource BrushGlassPrimary}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="12"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BrushGlassPrimaryLight}"/>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect BlurRadius="16" ShadowDepth="0" Color="{StaticResource GlassPrimary}" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BrushGlassPrimaryDark}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="#E8F1FF"/>
+                                <Setter Property="Foreground" Value="#B8D4F0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Secondary Button: Glas-Transluzent -->
+        <Style x:Key="GlassButtonSecondary" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource BrushGlassSurfaceLight}"/>
+            <Setter Property="Foreground" Value="{StaticResource BrushGlassTextDark}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BrushGlassBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="12"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BrushGlassSurfaceMedium}"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource BrushGlassPrimary}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#E8F1FF"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="#F5FBFF"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#E8F1FF"/>
+                                <Setter Property="Foreground" Value="#94A3B8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Ghost Button: Nur Text, kein Hintergrund -->
+        <Style x:Key="GlassButtonGhost" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource BrushGlassPrimary}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="Transparent"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BrushGlassSurfaceLight}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BrushGlassSurfaceMedium}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- CheckBox: Glas-Design -->
+        <Style x:Key="GlassCheckBox" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{StaticResource BrushGlassTextDark}"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <!-- ComboBox: Glas-Transluzent -->
+        <Style x:Key="GlassComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="{StaticResource BrushGlassSurfaceLight}"/>
+            <Setter Property="Foreground" Value="{StaticResource BrushGlassTextDark}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BrushGlassBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource BrushGlassTextDark}"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ItemBorder"
+                                Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource BrushGlassPrimaryLight}"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource BrushGlassPrimary}"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- TextBox: Glas-Transluzent -->
+        <Style x:Key="GlassTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource BrushGlassSurfaceLight}"/>
+            <Setter Property="Foreground" Value="{StaticResource BrushGlassTextDark}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BrushGlassBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+        </Style>
+
+        <!-- ListBox: Glas-Einträge -->
+        <Style x:Key="GlassListBox" TargetType="ListBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource BrushGlassTextDark}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BrushGlassBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <!-- ProgressBar: Glas mit Eis-Blau-Gradient -->
+        <Style x:Key="GlassProgressBar" TargetType="ProgressBar">
+            <Setter Property="Background" Value="#E8F1FF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Border x:Name="Root"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4">
+                            <Grid x:Name="PART_Track">
+                                <Rectangle x:Name="PART_Indicator"
+                                           Fill="{StaticResource GradientGlassPrimary}"
+                                           RadiusX="4"
+                                           RadiusY="4"
+                                           HorizontalAlignment="Left"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Slider: Glas mit Eis-Blauem Daumen -->
+        <Style x:Key="GlassSlider" TargetType="Slider">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource BrushGlassPrimary}"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <!-- Separator: Glas-Linie -->
+        <Style x:Key="GlassSeparator" TargetType="Separator">
+            <Setter Property="Background" Value="{StaticResource BrushGlassBorderLight}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0,16"/>
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Separator">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- TextBlock Standard -->
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource BrushGlassTextDark}"/>
+            <Setter Property="FontFamily" Value="Segoe UI Variable"/>
+            <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
+            <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+        </Style>
+
+        <!-- Window Standard: Glas-Hintergrund -->
+        <Style x:Key="GlassWindow" TargetType="Window">
+            <Setter Property="Background" Value="{StaticResource BrushGlassBackground}"/>
+            <Setter Property="FontFamily" Value="Segoe UI Variable"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+    </Application.Resources>
+</Application>

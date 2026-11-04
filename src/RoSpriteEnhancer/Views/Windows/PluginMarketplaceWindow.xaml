@@ -1,0 +1,135 @@
+<Window x:Class="RoSpriteEnhancer.Views.Windows.PluginMarketplaceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/2008/compatibility"
+        xmlns:local="clr-namespace:RoSpriteEnhancer.Views.Windows"
+        xmlns:converters="clr-namespace:RoSpriteEnhancer.Views.Converters"
+        Title="Plugin-Marktplatz" Height="600" Width="800"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BrushGlassSurfaceLight}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+        <Style x:Key="PluginCard" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource BrushGlassSurfaceMedium}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BrushGlassBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+        <Style x:Key="PluginButton" TargetType="Button">
+            <Setter Property="Style" Value="{StaticResource GlassButtonGhost}"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Margin" Value="0,0,4,0"/>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="🔌 Plugin-Marktplatz" FontSize="24" FontWeight="Bold" 
+                       Foreground="{StaticResource BrushGlassTextDark}"/>
+            <TextBlock Text="Externe Upscaler-Plugins entdecken, installieren und verwalten" 
+                       FontSize="12" Foreground="{StaticResource BrushGlassTextLight}" Margin="0,4,0,0"/>
+            <Border Height="1" Background="{StaticResource BrushGlassBorder}" Margin="0,12,0,0"/>
+        </StackPanel>
+
+        <!-- Suche & Filter -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBox x:Name="TxtPluginSearch" Grid.Column="0" 
+                     Style="{StaticResource GlassTextBox}"
+                     Margin="0,0,8,0"
+                     TextChanged="TxtPluginSearch_TextChanged"/>
+            <Button x:Name="BtnRefresh" Grid.Column="1" Content="🔄" 
+                    Style="{StaticResource GlassButtonGhost}"
+                    Click="BtnRefresh_Click"
+                    ToolTip="Plugin-Liste aktualisieren"/>
+        </Grid>
+
+        <!-- Plugin-Liste -->
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto" 
+                      Margin="0,8,0,0">
+            <ItemsControl x:Name="PluginsList" Margin="0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource PluginCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{Binding DisplayName}" FontSize="16" FontWeight="Bold"
+                                               Foreground="{StaticResource BrushGlassTextDark}"/>
+                                    <TextBlock Text="{Binding PluginId}" FontSize="10" 
+                                               Foreground="{StaticResource BrushGlassTextLight}" Margin="0,2,0,0"/>
+                                    <TextBlock Text="{Binding Description}" FontSize="11" 
+                                               Foreground="{StaticResource BrushGlassTextMedium}" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                                    <Grid Margin="0,8,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Version:" FontWeight="Bold" FontSize="9" 
+                                                   Foreground="{StaticResource BrushGlassTextLight}"/>
+                                        <TextBlock Grid.Column="0" Text="{Binding Version}" FontSize="9" 
+                                                   Foreground="{StaticResource BrushGlassTextMedium}" Margin="4,0,12,0"/>
+                                        <TextBlock Grid.Column="1" Text="Autor:" FontWeight="Bold" FontSize="9" 
+                                                   Foreground="{StaticResource BrushGlassTextLight}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Author}" FontSize="9" 
+                                                   Foreground="{StaticResource BrushGlassTextMedium}" Margin="4,0,12,0"/>
+                                        <TextBlock Grid.Column="2" Text="Status:" FontWeight="Bold" FontSize="9" 
+                                                   Foreground="{StaticResource BrushGlassTextLight}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding StatusText}" FontSize="9" 
+                                                   Foreground="{Binding StatusColor}" Margin="4,0,0,0"/>
+                                    </Grid>
+                                </StackPanel>
+                                
+                                <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Right">
+                                    <Button x:Name="BtnInstall" Content="Installieren" 
+                                            Style="{StaticResource PluginButton}"
+                                            Click="BtnInstall_Click"
+                                            Tag="{Binding PluginId}"
+                                            Visibility="{Binding IsInstalled, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                                    <Button x:Name="BtnUninstall" Content="Deinstallieren" 
+                                            Style="{StaticResource PluginButton}"
+                                            Click="BtnUninstall_Click"
+                                            Tag="{Binding PluginId}"
+                                            Visibility="{Binding IsInstalled, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                    <Button x:Name="BtnDetails" Content="Details" 
+                                            Style="{StaticResource PluginButton}"
+                                            Click="BtnDetails_Click"
+                                            Tag="{Binding PluginId}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Statusleiste -->
+        <Border Grid.Row="2" Background="{StaticResource BrushGlassSurfaceMedium}" 
+                BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="0,1,0,0"
+                Padding="12,8">
+            <TextBlock x:Name="TxtStatus" FontSize="11" Foreground="{StaticResource BrushGlassTextLight}"
+                       Text="Bereit"/>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,63 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore RoSpriteEnhancer.sln
+
+    - name: Build
+      run: dotnet build RoSpriteEnhancer.sln --configuration Release --no-restore
+
+    - name: Run tests with coverage
+      run: dotnet test RoSpriteEnhancer.Tests/RoSpriteEnhancer.Tests.csproj --configuration Release --collect:"XPlat Code Coverage" --results-directory:./coverage --logger "trx;LogFileName=test-results.trx"
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: RoSpriteEnhancer.Tests/coverage/
+        retention-days: 7
+
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: coverage-report
+        path: RoSpriteEnhancer.Tests/coverage/
+        retention-days: 7
+
+    - name: Check code coverage gate (80% minimum)
+      shell: pwsh
+      run: |
+        $coverageFile = Get-ChildItem -Path "RoSpriteEnhancer.Tests/coverage/" -Filter "coverage.cobertura.xml" -Recurse | Select-Object -First 1
+        if (-not $coverageFile) {
+          Write-Host "WARNING: No coverage file found, skipping gate check."
+          exit 0
+        }
+        $xml = [xml](Get-Content $coverageFile.FullName)
+        $lineRate = [double]$xml.coverage.line-rate
+        $linePercent = $lineRate * 100
+        Write-Host "Code coverage: $linePercent%"
+        if ($linePercent -lt 80) {
+          Write-Host "ERROR: Code coverage ($linePercent%) is below the 80% minimum threshold!"
+          exit 1
+        }
+        Write-Host "Code coverage gate passed."

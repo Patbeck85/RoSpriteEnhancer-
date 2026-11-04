@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+      <OutputType>WinExe</OutputType>
+      <TargetFramework>net8.0-windows</TargetFramework>
+      <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+      <UseWPF>true</UseWPF>
+      <AssemblyName>RoSpriteEnhancer</AssemblyName>
+      <RootNamespace>RoSpriteEnhancer</RootNamespace>
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+      <Version>1.20.0</Version>
+      <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+      <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+      <NoWarn>$(NoWarn);CA1416</NoWarn>
+      <ApplicationManifest>app.manifest</ApplicationManifest>
+    </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="tests\**" />
+    <EmbeddedResource Remove="tests\**" />
+    <None Remove="tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\download_ai_tools.ps1" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Link="download_ai_tools.ps1" Condition="Exists('..\download_ai_tools.ps1')" />
+    <None Include="..\download_ai_tools.bat" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Link="download_ai_tools.bat" Condition="Exists('..\download_ai_tools.bat')" />
+    <None Include="download_ai_tools.ps1" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Condition="Exists('download_ai_tools.ps1')" />
+    <None Include="download_ai_tools.bat" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Condition="Exists('download_ai_tools.bat')" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\docs\CLIENT_GRAPHICS_GUIDE.md" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Link="CLIENT_GRAPHICS_GUIDE.md" Condition="Exists('..\docs\CLIENT_GRAPHICS_GUIDE.md')" />
+    <None Include="docs\CLIENT_GRAPHICS_GUIDE.md" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Condition="Exists('docs\CLIENT_GRAPHICS_GUIDE.md')" />
+  </ItemGroup>
+</Project>
+
+
+
+

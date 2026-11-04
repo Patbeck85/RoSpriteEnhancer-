@@ -1,0 +1,17 @@
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.zip
+*.nupkg
+obj/project.assets.json
+obj/project.nuget.cache
+.workspace_temp/
+*.log
+tools/
+.vscode/
+*.user
+*.suo
+.DS_Store
+Thumbs.db

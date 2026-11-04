@@ -1,0 +1,88 @@
+<Window x:Class="RoSpriteEnhancer.Views.Windows.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Über RO Sprite Enhancer"
+        Height="560" Width="520"
+        MinHeight="500" MinWidth="450"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BrushGlassBackground}"
+        FontFamily="Segoe UI Variable"
+        ResizeMode="NoResize"
+        Style="{StaticResource GlassWindow}">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource BrushGlassTextDark}"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24,20,24,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <Border Grid.Row="0" Background="{StaticResource BrushGlassSurfaceLight}" BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="1" CornerRadius="12" Padding="16,14">
+            <StackPanel>
+                <TextBlock Text="🧊" FontSize="40" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                <TextBlock Text="RO Sprite Enhancer" FontSize="22" FontWeight="SemiBold" Foreground="{StaticResource BrushGlassPrimary}" HorizontalAlignment="Center"/>
+                <TextBlock Text="v1.21.0 — Liquid Glass 2026" FontSize="12" Foreground="{StaticResource BrushGlassPrimaryLight}" HorizontalAlignment="Center"/>
+                <TextBlock Text="Classic Ragnarok Online Sprite Processing Tool" FontSize="10" Foreground="{StaticResource BrushGlassTextLight}" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- CONTENT -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,16,0,0">
+            <StackPanel>
+                <!-- BESCHREIBUNG -->
+                <Border Background="{StaticResource BrushGlassSurfaceLight}" BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="1" CornerRadius="8" Padding="14,12">
+                    <TextBlock Text="Ein professionelles Werkzeug zur Verarbeitung von Ragnarok Online Sprites (.spr, .act, .bmp, .png). Unterstützt AI-Upscaling (xBRZ, Waifu2x, RealCUGAN), Skalierung, Pixel-Shading, Magenta-Colorkey-Verarbeitung und Batch-Verarbeitung für GRF-Archive." TextWrapping="Wrap" FontSize="10.5" Foreground="{StaticResource BrushGlassTextDark}" LineHeight="16"/>
+                </Border>
+
+                <TextBlock Text="ENTWICKLUNG" FontSize="10" FontWeight="Bold" Foreground="{StaticResource BrushGlassPrimary}" Margin="0,16,0,6"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                    <TextBlock Text="Entwickler: " FontWeight="SemiBold" Foreground="{StaticResource BrushGlassTextLight}"/>
+                    <TextBlock Text="Pat Beck (Patbeck85) — Hobby RO Developer"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                    <TextBlock Text="Plattform: " FontWeight="SemiBold" Foreground="{StaticResource BrushGlassTextLight}"/>
+                    <TextBlock Text=".NET 8.0 • WPF • Windows 10/11"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                    <TextBlock Text="Sprachen: " FontWeight="SemiBold" Foreground="{StaticResource BrushGlassTextLight}"/>
+                    <TextBlock Text="Deutsch, Englisch, Französisch, Spanisch, Italienisch, Portugiesisch, Rumänisch, Niederländisch, Schwedisch, Dänisch, Norwegisch"/>
+                </StackPanel>
+
+                <!-- BIBLIOTHEKEN -->
+                <TextBlock Text="BIBLIOTHEKEN &amp; TOOLS" FontSize="10" FontWeight="Bold" Foreground="{StaticResource BrushGlassPrimary}" Margin="0,16,0,6"/>
+                <Border Background="{StaticResource BrushGlassSurfaceLight}" BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="1" CornerRadius="8" Padding="12,10">
+                    <StackPanel>
+                        <TextBlock Text="• SixLabors.ImageSharp — Bildverarbeitung" FontSize="10" Foreground="{StaticResource BrushGlassTextLight}" Margin="0,2,0,2"/>
+                        <TextBlock Text="• System.Text.Json — JSON-Serialisierung" FontSize="10" Foreground="{StaticResource BrushGlassTextLight}" Margin="0,2,0,2"/>
+                        <TextBlock Text="• WPF — Windows Presentation Foundation" FontSize="10" Foreground="{StaticResource BrushGlassTextLight}" Margin="0,2,0,2"/>
+                        <TextBlock Text="• RealESRGAN / Waifu2x / RealCUGAN (optional, extern) — KI-Upscaling" FontSize="10" Foreground="{StaticResource BrushGlassTextLight}" Margin="0,2,0,2"/>
+                        <TextBlock Text="• xBRZ — Pixel-Art Skalierung" FontSize="10" Foreground="{StaticResource BrushGlassTextLight}" Margin="0,2,0,2"/>
+                        <Separator Margin="0,4"/>
+                        <TextBlock Text="Alle externen KI-Tools werden optional über den integrierten ToolInstaller bereitgestellt." FontSize="9" Foreground="{StaticResource BrushGlassTextLight}" FontStyle="Italic" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- LIZENZ -->
+                <TextBlock Text="LIZENZ" FontSize="10" FontWeight="Bold" Foreground="{StaticResource BrushGlassPrimary}" Margin="0,16,0,6"/>
+                <Border Background="{StaticResource BrushGlassSurfaceLight}" BorderBrush="{StaticResource BrushGlassBorder}" BorderThickness="1" CornerRadius="8" Padding="12,10">
+                    <TextBlock Text="MIT-Lizenz. Kostenlos für private und kommerzielle Nutzung. Ohne Gewährleistung." TextWrapping="Wrap" FontSize="10" Foreground="{StaticResource BrushGlassTextLight}"/>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- FOOTER -->
+        <Border Grid.Row="2" Margin="0,16,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="BtnCheckUpdate" Content="🔄 Update prüfen" Style="{StaticResource GlassButtonSecondary}" Width="110" Height="32" Margin="0,0,10,0" Click="BtnCheckUpdate_Click" ToolTip="Auf Updates prüfen"/>
+                <Button x:Name="BtnClose" Content="Schließen" Style="{StaticResource GlassButtonPrimary}" Width="90" Height="32" Margin="0" Click="BtnClose_Click" ToolTip="Fenster schließen"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
