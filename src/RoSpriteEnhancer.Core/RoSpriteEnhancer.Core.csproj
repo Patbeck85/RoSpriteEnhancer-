@@ -11,6 +11,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <NoWarn>$(NoWarn);CA1416</NoWarn>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,18 +20,50 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Utils/KeyboardShortcutManager.cs" />
-    <Compile Include="Utils/Logger.cs" />
-    <Compile Include="Utils/ServiceContainer.cs" />
-    <Compile Include="Utils/ThemeDetector.cs" />
-    <Compile Include="Utils/UndoRedoManager.cs" />
-    <Compile Include="Utils/PathHelper.cs" />
-    <Compile Include="Utils/PaletteManager.cs" />
+    <Compile Include="ActFile.cs" />
+    <Compile Include="Filtering/BilateralFilter.cs" />
+    <Compile Include="Filtering/PaletteQuantizer.cs" />
+    <Compile Include="Filtering/PixelEnhancer.cs" />
+    <Compile Include="Filtering/SuperSampler.cs" />
+    <Compile Include="Filtering/Volumetric3DEffect.cs" />
+    <Compile Include="GlobalUsings.cs" />
+    <Compile Include="IO/GrfArchive.cs" />
+    <Compile Include="IO/SprReader.cs" />
+    <Compile Include="IO/SprWriter.cs" />
+    <Compile Include="Models/SpriteFilter.cs" />
+    <Compile Include="Processing/BatchProcessor.cs" />
+    <Compile Include="Processing/DetailExtractor.cs" />
+    <Compile Include="Processing/IncrementalManifest.cs" />
     <Compile Include="Processing/QualityChecker.cs" />
     <Compile Include="Processing/SpriteAtlasGenerator.cs" />
     <Compile Include="Processing/SpriteContentClassifier.cs" />
-    <Compile Include="Services/PresetSharingService.cs" />
-    <Compile Include="Services/AutoUpdateService.cs" />
+    <Compile Include="Processing/SpriteResolutionProfile.cs" />
     <Compile Include="Processing/UpscalerPluginManager.cs" />
+    <Compile Include="Scaling/Scale2x.cs" />
+    <Compile Include="Scaling/XbrzScaler.cs" />
+    <Compile Include="Services/AutoUpdateService.cs" />
+    <Compile Include="Services/PresetManager.cs" />
+    <Compile Include="Services/PresetSharingService.cs" />
+    <Compile Include="Upscaling/AiFirstOptions.cs" />
+    <Compile Include="Upscaling/EsrganOptions.cs" />
+    <Compile Include="Upscaling/GFPGANRunner.cs" />
+    <Compile Include="Upscaling/RealCuganRunner.cs" />
+    <Compile Include="Upscaling/RealESRGANRunner.cs" />
+    <Compile Include="Upscaling/Waifu2xOptions.cs" />
+    <Compile Include="Upscaling/Waifu2xRunner.cs" />
+    <Compile Include="Utils/AiToolManager.cs" />
+    <Compile Include="Utils/AlphaBleedCleaner.cs" />
+    <Compile Include="Utils/ColorMatchLock.cs" />
+    <Compile Include="Utils/KeyboardShortcutManager.cs" />
+    <Compile Include="Utils/LanguageService.cs" />
+    <Compile Include="Utils/Logger.cs" />
+    <Compile Include="Utils/MagentaHandler.cs" />
+    <Compile Include="Utils/PaletteManager.cs" />
+    <Compile Include="Utils/PathHelper.cs" />
+    <Compile Include="Utils/ServiceContainer.cs" />
+    <Compile Include="Utils/ThemeDetector.cs" />
+    <Compile Include="Utils/ToolInstaller.cs" />
+    <Compile Include="Utils/UndoRedoManager.cs" />
+    <Compile Include="Utils/WindowStateService.cs" />
   </ItemGroup>
 </Project>

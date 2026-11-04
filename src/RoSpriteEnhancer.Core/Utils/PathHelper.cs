@@ -118,12 +118,12 @@ namespace RoSpriteEnhancer.Core.Utils
         /// <summary>
         /// Löscht ein Verzeichnis rekursiv, falls es existiert.
         /// </summary>
-        public static void SafeDeleteDirectory(string? path)
+        public static void SafeDeleteDirectory(string path)
         {
-            if (!DirectoryExists(path)) return;
+            if (string.IsNullOrEmpty(path) || !DirectoryExists(path)) return;
             try
             {
-                Directory.Delete(path, true);
+                Directory.Delete(path!, true);
             }
             catch { /* Bestehendes Verhalten nicht beeinträchtigen */ }
         }
@@ -131,12 +131,12 @@ namespace RoSpriteEnhancer.Core.Utils
         /// <summary>
         /// Löscht eine Datei, falls sie existiert.
         /// </summary>
-        public static void SafeDeleteFile(string? path)
+        public static void SafeDeleteFile(string path)
         {
-            if (!FileExists(path)) return;
+            if (string.IsNullOrEmpty(path) || !FileExists(path)) return;
             try
             {
-                File.Delete(path);
+                File.Delete(path!);
             }
             catch { /* Bestehendes Verhalten nicht beeinträchtigen */ }
         }
