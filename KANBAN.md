@@ -395,8 +395,8 @@
 | Task ID | Titel | Verantwortlich | Priorität | Status | DoD |
 |---------|-------|----------------|-----------|--------|-----|
 | **TASK-2801** | Multi-Format Export: PNG, BMP, TGA mit Qualitätsoptionen | Coder | HIGH | ✅ COMPLETE | Export in 3 Formate (PNG, BMP, TGA), OutputQuality-Property, TGA-Writer implementiert |
-| **TASK-2802** | Batch-Vorschau: Grid mit mehreren verarbeiteten Sprites nebeneinander | Coder | HIGH | 🔄 IN PROGRESS | Vorschau-Grid für bis zu 8 Sprites gleichzeitig |
-| **TASK-2803** | KI-Modell-Vergleich: Waifu2x vs. RealESRGAN Side-by-Side | Coder | HIGH | 📋 OPEN | Vergleichsmodus mit 2 Upscalern parallel |
-| **TASK-2804** | Automatische Sprite-Erkennung basierend auf Inhalt (Fallback) | Coder | MEDIUM | 📋 OPEN | Kategorisierung auch ohne korrekten Pfad möglich |
+| **TASK-2802** | Batch-Vorschau: Grid mit mehreren verarbeiteten Sprites nebeneinander | Coder | HIGH | ✅ COMPLETE | BuildGridView, Kontaktbogen-Modus mit Before/After, Grid-Ansicht für alle Dateien |
+| **TASK-2803** | KI-Modell-Vergleich: Waifu2x vs. RealESRGAN Side-by-Side | Coder | HIGH | ✅ COMPLETE | BtnAiComparison im MainWindow, parallel Waifu2x vs RealESRGAN Berechnung, 50/50 Split Vergleichs-Modus |
+| **TASK-2804** | Automatische Sprite-Erkennung basierend auf Inhalt (Fallback) | Coder | MEDIUM | ✅ COMPLETE | SpriteContentClassifier + ResolveCategoryIdWithContentFallback bereits implementiert und in BatchProcessor integriert |
 
 --->

@@ -626,7 +626,7 @@ namespace RoSpriteEnhancer.Views.Windows
                             }
                             BitmapSource? afterSrc = afterBmp != null ? BitmapToImageSource(afterBmp, 78) : null;
                             origBmp.Dispose(); afterBmp?.Dispose();
-                            Dispatcher.InvokeAsync(() => { imgBefore.Source = beforeSrc; if (afterSrc != null) imgAfter.Source = afterSrc; });
+                            var _ = Dispatcher.InvokeAsync(() => { imgBefore.Source = beforeSrc; if (afterSrc != null) imgAfter.Source = afterSrc; });
                         }
                         catch (Exception ex)
                         {
@@ -646,7 +646,7 @@ namespace RoSpriteEnhancer.Views.Windows
                             if (bmp == null) return;
                             BitmapSource thumb = BitmapToImageSource(bmp, 80);
                             bmp.Dispose();
-                            Dispatcher.InvokeAsync(() => img.Source = thumb);
+                            var _ = Dispatcher.InvokeAsync(() => img.Source = thumb);
                         }
                         catch (Exception ex)
                         {
@@ -1019,6 +1019,7 @@ namespace RoSpriteEnhancer.Views.Windows
         private System.Windows.Point _panStartPoint;
         private bool _isPanning;
         private bool _isSideBySide;
+        private bool _aiComparisonActive;
 
         private void BtnZoomIn_Click(object sender, RoutedEventArgs e) => SetZoom(_zoomLevel + ZoomStep);
         private void BtnZoomOut_Click(object sender, RoutedEventArgs e) => SetZoom(_zoomLevel - ZoomStep);
@@ -1083,6 +1084,128 @@ namespace RoSpriteEnhancer.Views.Windows
                 TxtStatus.Text = "Blend-Modus aktiv";
             }
             UpdatePreviewClip();
+        }
+
+        private async void BtnAiComparison_Click(object sender, RoutedEventArgs e)
+        {
+            _aiComparisonActive = BtnAiComparison.IsChecked == true;
+
+            if (!_aiComparisonActive)
+            {
+                BtnSideBySide.IsChecked = false;
+                _isSideBySide = false;
+                SldrPreview.IsEnabled = true;
+                TxtStatus.Text = "Bereit";
+                if (!string.IsNullOrEmpty(_lastPreviewFilePath)) LoadPreview(_lastPreviewFilePath);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(_lastPreviewFilePath))
+            {
+                BtnAiComparison.IsChecked = false;
+                _aiComparisonActive = false;
+                TxtStatus.Text = "Kein Sprite ausgewählt";
+                return;
+            }
+
+            // Side-by-Side Modus für 50/50 Split aktivieren
+            BtnSideBySide.IsChecked = true;
+            _isSideBySide = true;
+            SldrPreview.Value = 0.5;
+            SldrPreview.IsEnabled = false;
+
+            TxtStatus.Text = "KI-Vergleich: Waifu2x ↔ RealESRGAN berechnen...";
+
+            // Original-Bild laden
+            Bitmap? origBmp = LoadFirstFrameOrBitmap(_lastPreviewFilePath);
+            if (origBmp == null)
+            {
+                BtnAiComparison.IsChecked = false;
+                _aiComparisonActive = false;
+                BtnSideBySide.IsChecked = false;
+                _isSideBySide = false;
+                SldrPreview.IsEnabled = true;
+                TxtStatus.Text = "Bild konnte nicht geladen werden";
+                return;
+            }
+
+            string relPath = Path.GetRelativePath(_currentOptions.InputFolder, _lastPreviewFilePath).Replace("/", "\\");
+            var categoryId = ResolveCategoryIdInMain(relPath);
+
+            // Optionen-Kopien für jeden Algorithmus erstellen
+            var waifuOpts = CopyOptionsWithAlgorithm(_currentOptions, RoSpriteEnhancer.Core.Processing.ScaleAlgorithm.Waifu4xAnime);
+            var esrganOpts = CopyOptionsWithAlgorithm(_currentOptions, RoSpriteEnhancer.Core.Processing.ScaleAlgorithm.RealESRGAN4x);
+
+            // Beide Upscales parallel berechnen
+            Bitmap? waifuResult = null;
+            Bitmap? esrganResult = null;
+
+            await Task.Run(() =>
+            {
+                try { waifuResult = RoSpriteEnhancer.Core.Processing.BatchProcessor.ProcessBitmapPreview(origBmp, waifuOpts, categoryId, null); }
+                catch (Exception ex) { Debug.WriteLine($"[MainWindow] Waifu2x Vergleich-Fehler: {ex.Message}"); }
+            });
+
+            await Task.Run(() =>
+            {
+                try { esrganResult = RoSpriteEnhancer.Core.Processing.BatchProcessor.ProcessBitmapPreview(origBmp, esrganOpts, categoryId, null); }
+                catch (Exception ex) { Debug.WriteLine($"[MainWindow] RealESRGAN Vergleich-Fehler: {ex.Message}"); }
+            });
+
+            origBmp.Dispose();
+
+            var _ = Dispatcher.InvokeAsync(() =>
+            {
+                if (waifuResult != null)
+                {
+                    ImgBefore.Source = BitmapToImageSource(waifuResult, 0);
+                    waifuResult.Dispose();
+                }
+                if (esrganResult != null)
+                {
+                    ImgAfter.Source = BitmapToImageSource(esrganResult, 0);
+                    esrganResult.Dispose();
+                }
+                TxtStatus.Text = "KI-Vergleich: Waifu2x (links) vs RealESRGAN (rechts)";
+            });
+        }
+
+        /// <summary>
+        /// Erstellt eine Kopie der ProcessingOptions mit einem anderen ScaleAlgorithm.
+        /// </summary>
+        private static RoSpriteEnhancer.Core.Processing.ProcessingOptions CopyOptionsWithAlgorithm(
+            RoSpriteEnhancer.Core.Processing.ProcessingOptions opts,
+            RoSpriteEnhancer.Core.Processing.ScaleAlgorithm algo)
+        {
+            return new RoSpriteEnhancer.Core.Processing.ProcessingOptions
+            {
+                InputFolder = opts.InputFolder,
+                OutputFolder = opts.OutputFolder,
+                ScalePasses = opts.ScalePasses,
+                ScaleAlgorithm = algo,
+                IncludeBmp = opts.IncludeBmp,
+                IncludePng = opts.IncludePng,
+                IncludeTga = opts.IncludeTga,
+                IncludeSpr = opts.IncludeSpr,
+                ScaleActAnchors = opts.ScaleActAnchors,
+                Subfolders = opts.Subfolders,
+                HandleMagentaKey = opts.HandleMagentaKey,
+                AlphaThreshold = opts.AlphaThreshold,
+                OutputFormat = opts.OutputFormat,
+                OutputQuality = opts.OutputQuality,
+                Enhancer = opts.Enhancer,
+                SuperSampler = opts.SuperSampler,
+                Esrgan = opts.Esrgan,
+                Waifu2x = opts.Waifu2x,
+                RealCugan = opts.RealCugan,
+                AiFirst = opts.AiFirst,
+                RealESRGAN = opts.RealESRGAN,
+                GFPGAN = opts.GFPGAN,
+                CategoryOverrides = opts.CategoryOverrides,
+                ResolutionProfiles = opts.ResolutionProfiles,
+                IncrementalMode = opts.IncrementalMode,
+                AutoSelectEngine = opts.AutoSelectEngine
+            };
         }
 
         private void SetZoom(double level)

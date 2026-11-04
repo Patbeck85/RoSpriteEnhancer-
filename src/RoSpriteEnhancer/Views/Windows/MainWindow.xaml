@@ -274,6 +274,7 @@
                             <TextBlock Text="  ───  " FontSize="10" Foreground="{StaticResource BrushGlassTextLight}" VerticalAlignment="Center"/>
                             <TextBlock Text="NACHHER ►" FontSize="10" Foreground="{StaticResource BrushGlassSuccess}" VerticalAlignment="Center"/>
                             <ToggleButton x:Name="BtnSideBySide" Content="▌▌ Vergleich" Style="{StaticResource GlassButtonGhost}" FontSize="10" Padding="8,4" Margin="12,0,0,0" VerticalAlignment="Center" Click="BtnSideBySide_Click" ToolTip="Seitenweise Vergleich (Original ↔ Verarbeitet)"/>
+                        <ToggleButton x:Name="BtnAiComparison" Content="⚖ KI-Vergleich" Style="{StaticResource GlassButtonGhost}" FontSize="10" Padding="8,4" Margin="4,0,0,0" VerticalAlignment="Center" Click="BtnAiComparison_Click" ToolTip="Waifu2x vs RealESRGAN Side-by-Side"/>
                         </StackPanel>
                     </Grid>
                 </Border>
