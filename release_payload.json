@@ -1,0 +1,8 @@
+{
+  "tag_name": "v1.21.0",
+  "target_commitish": "main",
+  "name": "RoSpriteEnhancer v1.21.0 - Liquid Glass Release",
+  "body": "RoSpriteEnhancer v1.21.0 - Liquid Glass Release\n\nKI-gestützter Sprite-Editor für Ragnarok Online.\n\nFeatures:\n- Waifu2x, RealESRGAN, RealCUGAN, GFPGAN Upscaling\n- Batch-Verarbeitung mit Pause/Resume\n- Side-by-Side Vorschau mit Blend-Slider\n- Sprite-Atlas Generierung\n- Presets mit Cloud-Sharing (GitHub Gists)\n- Liquid Glass 2026 UI (weiss-bläulich)\n- Dark/Light Mode Toggle\n- Drag & Drop für Dateien/Ordner\n- Editierbare Tastaturkürzel\n- 48 Sprachen verfügbar\n- Auto-Update Mechanismus\n- Plugin-System für Upscaler\n- Undo/Redo für Vorschau\n- Erststart-Wizard\n\nBuild:\n- 0 Fehler, 0 Warnungen\n- 120/120 Tests bestanden\n\nInstallation:\nEinfach ZIP entpacken und RoSpriteEnhancer.exe starten.\nKI-Tools können über die Einstellungen heruntergeladen werden.",
+  "draft": false,
+  "prerelease": false
+}

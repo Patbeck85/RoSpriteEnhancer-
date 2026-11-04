@@ -13,7 +13,8 @@ namespace RoSpriteEnhancer.Core.Processing
     {
         Png,
         Bmp_MagentaKey,
-        Bmp_Indexed8_Palette
+        Bmp_Indexed8_Palette,
+        Tga_Uncompressed
     }
 
     public enum ScaleAlgorithm
@@ -88,6 +89,7 @@ namespace RoSpriteEnhancer.Core.Processing
         public int  AlphaThreshold   { get; set; } = 128;
 
         public OutputFormat OutputFormat { get; set; } = OutputFormat.Png;
+        public int OutputQuality { get; set; } = 9; // PNG-Kompression 0-9, BMP/TGA unkomprimiert ignoriert
         public EnhancerOptions Enhancer  { get; set; } = new();
         public SuperSamplerOptions SuperSampler { get; set; } = new();
         public EsrganOptions Esrgan { get; set; } = new();
@@ -319,7 +321,7 @@ namespace RoSpriteEnhancer.Core.Processing
                                 }
                                 else
                                 {
-                                    SaveBitmap(processedBmp, outputPath, opts.OutputFormat);
+                                    SaveBitmap(processedBmp, outputPath, opts.OutputFormat, opts.OutputQuality);
                                     Interlocked.Increment(ref processed);
                                     metrics.Add((relative, changeMetric));
                                     success = true;
@@ -1142,7 +1144,7 @@ namespace RoSpriteEnhancer.Core.Processing
             }
         }
 
-        private static void SaveBitmap(Bitmap bmp, string path, OutputFormat fmt)
+        private static void SaveBitmap(Bitmap bmp, string path, OutputFormat fmt, int quality)
         {
             switch (fmt)
             {
@@ -1153,6 +1155,62 @@ namespace RoSpriteEnhancer.Core.Processing
                 case OutputFormat.Bmp_Indexed8_Palette:
                     bmp.Save(path, ImageFormat.Bmp);
                     break;
+                case OutputFormat.Tga_Uncompressed:
+                    SaveTga(bmp, path);
+                    break;
+            }
+        }
+
+        public static void SaveTga(Bitmap bmp, string path)
+        {
+            int width = bmp.Width;
+            int height = bmp.Height;
+
+            using FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
+            using BinaryWriter bw = new BinaryWriter(fs);
+
+            // TGA Header (18 bytes)
+            bw.Write((byte)0);           // ID length
+            bw.Write((byte)0);           // Color map type
+            bw.Write((byte)2);           // Image type: uncompressed true-color
+            bw.Write((ushort)0);         // Color map origin
+            bw.Write((ushort)0);         // Color map length
+            bw.Write((byte)0);           // Color map entry size
+            bw.Write((ushort)0);         // X origin
+            bw.Write((ushort)0);         // Y origin
+            bw.Write((ushort)width);     // Image width
+            bw.Write((ushort)height);    // Image height
+            bw.Write((byte)32);          // Pixel depth (32-bit RGBA)
+            bw.Write((byte)0x20);        // Image descriptor (top-left origin)
+
+            // Pixel data (BGRA, top-to-bottom)
+            BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            try
+            {
+                unsafe
+                {
+                    for (int y = 0; y < height; y++)
+                    {
+                        int* row = (int*)((byte*)bmpData.Scan0 + y * bmpData.Stride);
+                        for (int x = 0; x < width; x++)
+                        {
+                            int argb = row[x];
+                            byte a = (byte)(argb >> 24);
+                            byte r = (byte)(argb >> 16);
+                            byte g = (byte)(argb >> 8);
+                            byte b = (byte)argb;
+                            bw.Write(b);
+                            bw.Write(g);
+                            bw.Write(r);
+                            bw.Write(a);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                bmp.UnlockBits(bmpData);
             }
         }
 
@@ -1161,6 +1219,7 @@ namespace RoSpriteEnhancer.Core.Processing
             {
                 OutputFormat.Bmp_MagentaKey       => Path.ChangeExtension(basePath, ".bmp"),
                 OutputFormat.Bmp_Indexed8_Palette => Path.ChangeExtension(basePath, ".bmp"),
+                OutputFormat.Tga_Uncompressed     => Path.ChangeExtension(basePath, ".tga"),
                 _                                 => Path.ChangeExtension(basePath, ".png")
             };
 
@@ -1191,7 +1250,7 @@ namespace RoSpriteEnhancer.Core.Processing
             return dst;
         }
 
-        private static Bitmap LoadTga(string path)
+        public static Bitmap LoadTga(string path)
         {
             using BinaryReader br = new BinaryReader(File.OpenRead(path));
             byte idLength     = br.ReadByte();

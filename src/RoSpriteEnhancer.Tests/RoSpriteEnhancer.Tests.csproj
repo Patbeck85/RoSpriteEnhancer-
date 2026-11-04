@@ -73,6 +73,7 @@
     <Compile Include="Unit/MagentaHandlerExtendedTests.cs" />
     <Compile Include="Unit/IntegrationTests.cs" />
     <Compile Include="Unit/PerformanceTests.cs" />
+    <Compile Include="Unit/TgaFormatTests.cs" />
   </ItemGroup>
 
 </Project>

@@ -390,4 +390,13 @@
 | 22 | ✅ Complete | 100% | TASK-2201 bis TASK-2205 alle abgeschlossen (Dokumentation auf English) |
 | 23 | ✅ Complete | 100% | Alle CI/CD & Quality Gate Features implementiert |
 
----
+## 🏁 Sprint 28: Priorität 2 – Neue Features (HOCH)
+
+| Task ID | Titel | Verantwortlich | Priorität | Status | DoD |
+|---------|-------|----------------|-----------|--------|-----|
+| **TASK-2801** | Multi-Format Export: PNG, BMP, TGA mit Qualitätsoptionen | Coder | HIGH | ✅ COMPLETE | Export in 3 Formate (PNG, BMP, TGA), OutputQuality-Property, TGA-Writer implementiert |
+| **TASK-2802** | Batch-Vorschau: Grid mit mehreren verarbeiteten Sprites nebeneinander | Coder | HIGH | 🔄 IN PROGRESS | Vorschau-Grid für bis zu 8 Sprites gleichzeitig |
+| **TASK-2803** | KI-Modell-Vergleich: Waifu2x vs. RealESRGAN Side-by-Side | Coder | HIGH | 📋 OPEN | Vergleichsmodus mit 2 Upscalern parallel |
+| **TASK-2804** | Automatische Sprite-Erkennung basierend auf Inhalt (Fallback) | Coder | MEDIUM | 📋 OPEN | Kategorisierung auch ohne korrekten Pfad möglich |
+
+--->
