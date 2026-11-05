@@ -15,3 +15,4 @@ tools/
 *.suo
 .DS_Store
 Thumbs.db
+release_final/
