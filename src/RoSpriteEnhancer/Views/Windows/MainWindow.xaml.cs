@@ -88,6 +88,8 @@ namespace RoSpriteEnhancer.Views.Windows
             _grfElapsedTimer.Tick += GrfElapsedTimer_Tick;
             SizeChanged += (_, _) => UpdatePreviewClip();
             SldrOnionSkin.ToolTip = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("tooltip.onionSkinStrength");
+            BtnAiComparison.Content = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("btn.ai_comparison");
+            BtnAiComparison.ToolTip = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("tooltip.btn.ai_comparison");
             Closing += (_, _) =>
             {
                 _animTimer.Stop();
@@ -1114,7 +1116,7 @@ namespace RoSpriteEnhancer.Views.Windows
             SldrPreview.Value = 0.5;
             SldrPreview.IsEnabled = false;
 
-            TxtStatus.Text = "KI-Vergleich: Waifu2x ↔ RealESRGAN berechnen...";
+            TxtStatus.Text = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("msg.ai_comparison_calculating");
 
             // Original-Bild laden
             Bitmap? origBmp = LoadFirstFrameOrBitmap(_lastPreviewFilePath);
@@ -1166,7 +1168,7 @@ namespace RoSpriteEnhancer.Views.Windows
                     ImgAfter.Source = BitmapToImageSource(esrganResult, 0);
                     esrganResult.Dispose();
                 }
-                TxtStatus.Text = "KI-Vergleich: Waifu2x (links) vs RealESRGAN (rechts)";
+                TxtStatus.Text = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("msg.ai_comparison_complete");
             });
         }
 

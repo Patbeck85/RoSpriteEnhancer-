@@ -176,9 +176,10 @@
                         <!-- AUSGABEFORMAT -->
                         <TextBlock Text="💾 AUSGABEFORMAT" FontSize="10" FontWeight="Bold" Foreground="{StaticResource BrushGlassPrimary}" Margin="0,0,0,8"/>
                         <ComboBox x:Name="CmbOutputFormat" Style="{StaticResource GlassComboBox}" Margin="0,0,0,4" SelectionChanged="CmbOutputFormat_Changed">
-                            <ComboBoxItem Content="PNG  (32-bit Alpha)" IsSelected="True"/>
-                            <ComboBoxItem Content="BMP  (Magenta Colorkey)"/>
-                            <ComboBoxItem Content="BMP  (8-bit Palette)"/>
+                            <ComboBoxItem x:Name="CmbOutputFormatPng" Content="PNG  (32-bit Alpha)" IsSelected="True"/>
+                            <ComboBoxItem x:Name="CmbOutputFormatBmpMagenta" Content="BMP  (Magenta Colorkey)"/>
+                            <ComboBoxItem x:Name="CmbOutputFormatBmpPalette" Content="BMP  (8-bit Palette)"/>
+                            <ComboBoxItem x:Name="CmbOutputFormatTga" Content="TGA  (Uncompressed)"/>
                         </ComboBox>
                         <TextBlock x:Name="TxtFormatHint" Text="PNG: empfohlen, volle Qualität" FontSize="10" Foreground="{StaticResource BrushGlassTextLight}" TextWrapping="Wrap" Margin="0,0,0,12"/>
 

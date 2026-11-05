@@ -88,6 +88,12 @@ namespace RoSpriteEnhancer.Views.Windows
             BtnOk.ToolTip = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("tooltip.btn.ok");
             BtnCancel.ToolTip = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("tooltip.btn.cancel");
             BtnApply.ToolTip = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("tooltip.btn.apply");
+
+            // OutputFormat ComboBox lokalisieren
+            CmbOutputFormatPng.Content = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("cmb.formatPng");
+            CmbOutputFormatBmpMagenta.Content = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("cmb.formatBmpMagenta");
+            CmbOutputFormatBmpPalette.Content = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("cmb.formatBmpPalette");
+            CmbOutputFormatTga.Content = RoSpriteEnhancer.Core.Utils.LanguageService.GetString("cmb.formatTga");
             LoadShortcuts();
         }
 
@@ -517,6 +523,7 @@ namespace RoSpriteEnhancer.Views.Windows
                 {
                     1 => OutputFormat.Bmp_MagentaKey,
                     2 => OutputFormat.Bmp_Indexed8_Palette,
+                    3 => OutputFormat.Tga_Uncompressed,
                     _ => OutputFormat.Png
                 },
                 Enhancer = new EnhancerOptions
@@ -674,6 +681,7 @@ namespace RoSpriteEnhancer.Views.Windows
             {
                 OutputFormat.Bmp_MagentaKey => 1,
                 OutputFormat.Bmp_Indexed8_Palette => 2,
+                OutputFormat.Tga_Uncompressed => 3,
                 _ => 0
             };
 
@@ -946,6 +954,7 @@ namespace RoSpriteEnhancer.Views.Windows
             {
                 OutputFormat.Bmp_MagentaKey => 1,
                 OutputFormat.Bmp_Indexed8_Palette => 2,
+                OutputFormat.Tga_Uncompressed => 3,
                 _ => 0
             };
 
@@ -1136,9 +1145,10 @@ namespace RoSpriteEnhancer.Views.Windows
             if (!IsLoaded || TxtFormatHint == null) return;
             TxtFormatHint.Text = CmbOutputFormat.SelectedIndex switch
             {
-                0 => "PNG: empfohlen, volle Qualität",
-                1 => "BMP + Magenta: natives RO-Format",
-                2 => "8-bit BMP: exakt wie Original",
+                0 => RoSpriteEnhancer.Core.Utils.LanguageService.GetString("tooltip.formatPng"),
+                1 => RoSpriteEnhancer.Core.Utils.LanguageService.GetString("tooltip.formatBmpMagenta"),
+                2 => RoSpriteEnhancer.Core.Utils.LanguageService.GetString("tooltip.formatBmpPalette"),
+                3 => RoSpriteEnhancer.Core.Utils.LanguageService.GetString("tooltip.formatTga"),
                 _ => ""
             };
             Option_Changed(sender, e);
