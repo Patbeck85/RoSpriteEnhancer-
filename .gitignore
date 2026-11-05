@@ -16,3 +16,9 @@ tools/
 .DS_Store
 Thumbs.db
 release_final/
+
+# Build output directories
+final_publish/
+final_publish_optimized/
+perf_test/
+publish_output/
