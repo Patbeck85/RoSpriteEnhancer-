@@ -24,10 +24,10 @@
 
 
   <ItemGroup>
-    <None Include="..\..\download_ai_tools.ps1" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Link="download_ai_tools.ps1" Condition="Exists('..\..\download_ai_tools.ps1')" />
-    <None Include="..\..\download_ai_tools.bat" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Link="download_ai_tools.bat" Condition="Exists('..\..\download_ai_tools.bat')" />
-    <None Include="download_ai_tools.ps1" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Condition="Exists('download_ai_tools.ps1')" />
-    <None Include="download_ai_tools.bat" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Condition="Exists('download_ai_tools.bat')" />
+    <None Include="..\..\scripts\download_ai_tools.ps1" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Link="scripts\download_ai_tools.ps1" Condition="Exists('..\..\scripts\download_ai_tools.ps1')" />
+    <None Include="..\..\scripts\download_ai_tools.bat" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Link="scripts\download_ai_tools.bat" Condition="Exists('..\..\scripts\download_ai_tools.bat')" />
+    <None Include="scripts\download_ai_tools.ps1" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Condition="Exists('scripts\download_ai_tools.ps1')" />
+    <None Include="scripts\download_ai_tools.bat" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Condition="Exists('scripts\download_ai_tools.bat')" />
   </ItemGroup>
 
   <ItemGroup>
