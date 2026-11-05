@@ -22,3 +22,14 @@ final_publish/
 final_publish_optimized/
 perf_test/
 publish_output/
+
+# Build artifacts & caches
+waifu2x/
+release_payload.json
+.hermes_cache/
+SESSION_STATE.md
+SOUL.txt
+Todo.md
+"Textdokument (neu).txt"
+WORKFLOW.md
+tests/
