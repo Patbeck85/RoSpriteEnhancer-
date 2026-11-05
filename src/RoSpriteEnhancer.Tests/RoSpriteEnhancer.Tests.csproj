@@ -74,6 +74,12 @@
     <Compile Include="Unit/IntegrationTests.cs" />
     <Compile Include="Unit/PerformanceTests.cs" />
     <Compile Include="Unit/TgaFormatTests.cs" />
+    <Compile Include="Unit/LoggerTests.cs" />
+    <Compile Include="Unit/PaletteManagerTests.cs" />
+    <Compile Include="Unit/PathHelperTests.cs" />
+    <Compile Include="Unit/ServiceContainerTests.cs" />
+    <Compile Include="Unit/ThemeDetectorTests.cs" />
+    <Compile Include="Unit/UndoRedoManagerTests.cs" />
   </ItemGroup>
 
 </Project>
