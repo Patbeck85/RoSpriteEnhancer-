@@ -45,13 +45,13 @@ namespace RoSpriteEnhancer.Views.Windows
 
         private void BtnBrowseInput_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new OpenFolderDialog { Title = "Eingabe-Ordner wählen" };
+            var dialog = new OpenFolderDialog { Title = LanguageService.GetString("msg.dialog_input_folder") };
             if (dialog.ShowDialog() == true) TxtInputPath.Text = dialog.FolderName;
         }
 
         private void BtnBrowseOutput_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new OpenFolderDialog { Title = "Ausgabe-Ordner wählen" };
+            var dialog = new OpenFolderDialog { Title = LanguageService.GetString("msg.dialog_output_folder") };
             if (dialog.ShowDialog() == true) TxtOutputPath.Text = dialog.FolderName;
         }
 

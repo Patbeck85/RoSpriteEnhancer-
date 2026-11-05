@@ -33,7 +33,7 @@ namespace RoSpriteEnhancer.Views.Windows
             set { _isInstalled = value; OnPropertyChanged(); OnPropertyChanged(nameof(StatusText)); OnPropertyChanged(nameof(StatusColor)); }
         }
 
-        public string StatusText => IsInstalled ? "Installiert" : "Nicht installiert";
+        public string StatusText => IsInstalled ? LanguageService.GetString("msg.plugin_installed") : LanguageService.GetString("msg.plugin_not_installed");
         public Brush StatusColor => IsInstalled ? Brushes.Green : Brushes.Orange;
 
         public PluginMarketplaceItem(PluginInfo pluginInfo, bool isInstalled)
@@ -90,7 +90,7 @@ namespace RoSpriteEnhancer.Views.Windows
                 _plugins.Add(new PluginMarketplaceItem(pluginInfo, isInstalled));
             }
 
-            TxtStatus.Text = $"{_plugins.Count} Plugin(s) gefunden";
+            TxtStatus.Text = string.Format(LanguageService.GetString("msg.plugin_count"), _plugins.Count);
         }
 
         private bool IsPluginInstalled(string pluginId)
@@ -127,7 +127,7 @@ namespace RoSpriteEnhancer.Views.Windows
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
             LoadPlugins();
-            TxtStatus.Text = "Plugin-Liste aktualisiert";
+            TxtStatus.Text = LanguageService.GetString("msg.plugin_list_refreshed");
         }
 
         private void BtnInstall_Click(object sender, RoutedEventArgs e)
@@ -138,7 +138,8 @@ namespace RoSpriteEnhancer.Views.Windows
             var plugin = UpscalerPluginManager.GetPlugin(pluginId);
             if (plugin == null)
             {
-                MessageBox.Show($"Plugin '{pluginId}' konnte nicht gefunden werden.", "Fehler",
+                MessageBox.Show(string.Format(LanguageService.GetString("msg.plugin_not_found"), pluginId),
+                    LanguageService.GetString("msg.plugin_error"),
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
@@ -146,9 +147,9 @@ namespace RoSpriteEnhancer.Views.Windows
             // Vereinfachte Installation: Plugin-DLL wird als "installiert" markiert
             // In einer echten Implementierung würde hier ein Download erfolgen
             MessageBox.Show(
-                $"Plugin '{plugin.DisplayName}' (v{plugin.Version}) wurde installiert.\n" +
-                $"Starten Sie die Anwendung neu, um das Plugin zu aktivieren.",
-                "Plugin installiert", MessageBoxButton.OK, MessageBoxImage.Information);
+                string.Format(LanguageService.GetString("msg.plugin_installed_msg"), plugin.DisplayName, plugin.Version),
+                LanguageService.GetString("msg.plugin_installed_title"),
+                MessageBoxButton.OK, MessageBoxImage.Information);
 
             LoadPlugins();
         }
@@ -159,16 +160,17 @@ namespace RoSpriteEnhancer.Views.Windows
             if (button?.Tag is not string pluginId) return;
 
             var result = MessageBox.Show(
-                $"Möchten Sie das Plugin wirklich deinstallieren?",
-                "Plugin deinstallieren", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                LanguageService.GetString("msg.plugin_uninstall_confirm"),
+                LanguageService.GetString("msg.plugin_uninstall_title"),
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
                 // Vereinfachte Deinstallation
                 MessageBox.Show(
-                    $"Plugin '{pluginId}' wurde deinstalliert.\n" +
-                    $"Starten Sie die Anwendung neu, um die Änderungen zu übernehmen.",
-                    "Plugin deinstalliert", MessageBoxButton.OK, MessageBoxImage.Information);
+                    string.Format(LanguageService.GetString("msg.plugin_uninstalled_msg"), pluginId),
+                    LanguageService.GetString("msg.plugin_uninstalled_title"),
+                    MessageBoxButton.OK, MessageBoxImage.Information);
 
                 LoadPlugins();
             }
@@ -183,13 +185,13 @@ namespace RoSpriteEnhancer.Views.Windows
             if (plugin == null) return;
 
             MessageBox.Show(
-                $"Name: {plugin.DisplayName}\n" +
-                $"Version: {plugin.Version}\n" +
-                $"Autor: {plugin.Author}\n" +
-                $"Beschreibung: {plugin.Description}\n" +
-                $"Verfügbar: {plugin.IsAvailable()}\n" +
-                $"ID: {plugin.PluginId}",
-                $"Plugin-Details: {plugin.DisplayName}",
+                string.Format(LanguageService.GetString("msg.plugin_details_name"), plugin.DisplayName) + "\n" +
+                string.Format(LanguageService.GetString("msg.plugin_details_version"), plugin.Version) + "\n" +
+                string.Format(LanguageService.GetString("msg.plugin_details_author"), plugin.Author) + "\n" +
+                string.Format(LanguageService.GetString("msg.plugin_details_description"), plugin.Description) + "\n" +
+                string.Format(LanguageService.GetString("msg.plugin_details_available"), plugin.IsAvailable()) + "\n" +
+                string.Format(LanguageService.GetString("msg.plugin_details_id"), plugin.PluginId),
+                string.Format(LanguageService.GetString("msg.plugin_details_title"), plugin.DisplayName),
                 MessageBoxButton.OK, MessageBoxImage.Information);
         }
 

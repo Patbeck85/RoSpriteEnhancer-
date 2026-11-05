@@ -33,28 +33,32 @@ namespace RoSpriteEnhancer.Views.Windows
 
                 if (!string.IsNullOrEmpty(result.ErrorMessage))
                 {
-                    MessageBox.Show($"Update-Check fehlgeschlagen:\n{result.ErrorMessage}", "Update",
+                    MessageBox.Show(string.Format(LanguageService.GetString("msg.update_check_failed"), result.ErrorMessage),
+                        LanguageService.GetString("msg.plugin_error"),
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
                 if (result.UpdateAvailable)
                 {
-                    var msg = $"Update verfügbar!\n\nAktuelle Version: {result.CurrentVersion}\nNeue Version: {result.LatestVersion}\n\n{result.ReleaseNotes}\n\nMöchten Sie die Download-Seite öffnen?";
-                    if (MessageBox.Show(msg, "Update verfügbar", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                    var msg = string.Format(LanguageService.GetString("msg.update_available"),
+                        result.CurrentVersion, result.LatestVersion, result.ReleaseNotes);
+                    if (MessageBox.Show(msg, LanguageService.GetString("msg.update_available_title"), MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                     {
                         AutoUpdateService.OpenDownloadUrl(result.DownloadUrl);
                     }
                 }
                 else
                 {
-                    MessageBox.Show($"Sie verwenden bereits die neueste Version ({result.CurrentVersion}).", "Update",
+                    MessageBox.Show(string.Format(LanguageService.GetString("msg.update_already_latest"), result.CurrentVersion),
+                        LanguageService.GetString("msg.plugin_error"),
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Fehler beim Update-Check:\n{ex.Message}", "Update",
+                MessageBox.Show(string.Format(LanguageService.GetString("msg.update_check_error"), ex.Message),
+                    LanguageService.GetString("msg.plugin_error"),
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally

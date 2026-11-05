@@ -45,7 +45,7 @@ namespace RoSpriteEnhancer.Views.Windows
 
             var btnOk = new System.Windows.Controls.Button
             {
-                Content = "OK",
+                Content = LanguageService.GetString("msg.ok"),
                 Width = 70,
                 Margin = new Thickness(0, 0, 10, 0),
                 IsDefault = true
@@ -59,7 +59,7 @@ namespace RoSpriteEnhancer.Views.Windows
 
             var btnCancel = new System.Windows.Controls.Button
             {
-                Content = "Abbrechen",
+                Content = LanguageService.GetString("msg.cancel"),
                 Width = 70,
                 IsCancel = true
             };
