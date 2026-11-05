@@ -160,7 +160,16 @@ namespace RoSpriteEnhancer.Core.Upscaling
                     // Blend mit Original für kontrollierte Restauration
                     if (opts.BlendStrength < 1.0f && opts.BlendStrength > 0.0f)
                     {
-                        return BlendImages(src, dst32, opts.BlendStrength);
+                        using (var blended = BlendImages(src, dst32, opts.BlendStrength))
+                        {
+                            // Kopieren, da dst32 hier disposed wird und der Aufrufer ein eigenes Bitmap braucht
+                            Bitmap result = new Bitmap(blended.Width, blended.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                            using (var g2 = System.Drawing.Graphics.FromImage(result))
+                            {
+                                g2.DrawImage(blended, 0, 0, blended.Width, blended.Height);
+                            }
+                            return result;
+                        }
                     }
 
                     return dst32;

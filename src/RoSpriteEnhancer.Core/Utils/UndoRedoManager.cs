@@ -66,15 +66,19 @@ namespace RoSpriteEnhancer.Core.Utils
             {
                 _undoStack.Push(_current);
 
-                // History begrenzen
+                // History begrenzen: älteste Einträge (Boden des Stacks) entfernen
                 while (_undoStack.Count > _maxHistory)
                 {
-                    // Entferne ältesten Eintrag (untersten des Stacks)
                     var items = _undoStack.ToArray();
-                    Array.Clear(items, 0, items.Length - _maxHistory);
                     _undoStack.Clear();
-                    foreach (var item in items)
-                        if (item != null) _undoStack.Push(item);
+                    // items[0] = ältesten Eintrag, items[^1] = neuesten Eintrag
+                    // Behalte nur die letzten _maxHistory Einträge
+                    int startIndex = items.Length - _maxHistory;
+                    for (int i = startIndex; i < items.Length; i++)
+                    {
+                        if (items[i] != null)
+                            _undoStack.Push(items[i]);
+                    }
                 }
 
                 _redoStack.Clear();
