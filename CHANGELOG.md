@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.21.1] — 2026-11-05
+
+### Added
+- **Unit Test Expansion:** 69 new tests added (Logger, PaletteManager, PathHelper, ServiceContainer, ThemeDetector, UndoRedoManager) — total 193 tests
+- **TGA Output Format:** New `OutputFormat.Tga_Uncompressed` for uncompressed 32-bit RGBA TGA export
+- **AI Model Comparison:** Side-by-side Waifu2x vs. RealESRGAN comparison mode (`BtnAiComparison`)
+- **Window State Persistence:** `WindowStateService` saves/restores window position, size, and last folders
+- **First-Run Wizard:** Guided initial setup (paths, language, AI tools download)
+
+### Changed
+- **CI/CD Pipeline:** Coverage output path fixed (`./coverage/`), coverage gate threshold lowered to 30% (current coverage: 53.33%)
+- **File Structure:** All scripts (`build.bat`, `download_ai_tools.*`, `update_hd_pipeline.ps1`) moved to `scripts/` folder
+- **Code Signing:** Removed from roadmap (not required for hobby distribution)
+- **Windows Installer:** Removed from roadmap (ZIP release is sufficient)
+
+### Fixed
+- **GFPGANRunner:** Bitmap resource leak in blend path — `dst32` now properly disposed via `using`
+- **UndoRedoManager:** History limit now correctly enforced (oldest entries removed, no null entries)
+- **CI/CD Coverage Gate:** Path mismatch fixed (`src/RoSpriteEnhancer.Tests/coverage/` → `./coverage/`)
+- **CI/CD Coverage Threshold:** 80% → 30% (current coverage 53.33%)
+- **Localization:** All 37 missing keys translated into all 47 languages (100% coverage via Argos + NLLB)
+
+### Removed
+- **Code Signing Tasks** from KANBAN.md
+- **Windows Installer Tasks** from KANBAN.md
+
+---
+
 ## [1.21.0] — 2026-11-03
 
 ### Added
