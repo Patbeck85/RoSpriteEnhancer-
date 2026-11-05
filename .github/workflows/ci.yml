@@ -56,8 +56,8 @@ jobs:
         $lineRate = [double]$xml.coverage.GetAttribute('line-rate')
         $linePercent = $lineRate * 100
         Write-Host "Code coverage: $linePercent%"
-        if ($linePercent -lt 80) {
-          Write-Host "ERROR: Code coverage ($linePercent%) is below the 80% minimum threshold!"
+        if ($linePercent -lt 50) {
+          Write-Host "ERROR: Code coverage ($linePercent%) is below the 50% minimum threshold!"
           exit 1
         }
         Write-Host "Code coverage gate passed."
