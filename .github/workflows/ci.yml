@@ -53,7 +53,7 @@ jobs:
           exit 0
         }
         $xml = [xml](Get-Content $coverageFile.FullName)
-        $lineRate = [double]$xml.coverage.line-rate
+        $lineRate = [double]$xml.coverage.GetAttribute('line-rate')
         $linePercent = $lineRate * 100
         Write-Host "Code coverage: $linePercent%"
         if ($linePercent -lt 80) {
