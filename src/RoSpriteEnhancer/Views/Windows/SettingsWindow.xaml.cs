@@ -346,22 +346,27 @@ namespace RoSpriteEnhancer.Views.Windows
 
         private void UpdateUiTexts()
         {
-            // Tab-Header aktualisieren
-            foreach (var item in FindVisualChildren<TabItem>(this))
+            // Tab-Header aktualisieren (indexbasiert, sprachunabhängig)
+            var tabs = FindVisualChildren<TabItem>(this).ToList();
+            var tabKeys = new[] { "tab.general", "tab.scaling", "tab.shading", "tab.categories", "tab.animation" };
+            for (int i = 0; i < Math.Min(tabs.Count, tabKeys.Length); i++)
             {
-                if (item.Header is string headerStr)
+                if (tabs[i].Header is string)
                 {
-                    switch (headerStr)
-                    {
-                        case "⚙ Allgemein": item.Header = "⚙ " + LanguageService.GetString("tab.general"); break;
-                        case "🔍 Skalierung & KI": item.Header = "🔍 " + LanguageService.GetString("tab.scaling"); break;
-                        case "✨ Pixel-Shading & Effekte": item.Header = "✨ " + LanguageService.GetString("tab.shading"); break;
-                        case "🏷 Kategorien": item.Header = "🏷 " + LanguageService.GetString("tab.categories"); break;
-                        case "🎬 Animation": item.Header = "🎬 " + LanguageService.GetString("tab.animation"); break;
-                    }
+                    tabs[i].Header = GetTabIcon(i) + " " + LanguageService.GetString(tabKeys[i]);
                 }
             }
         }
+
+        private static string GetTabIcon(int index) => index switch
+        {
+            0 => "⚙",
+            1 => "🔍",
+            2 => "✨",
+            3 => "🏷",
+            4 => "🎬",
+            _ => ""
+        };
 
         private void CmbLanguage_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
